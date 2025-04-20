@@ -1,0 +1,9 @@
+
+@stop
+@back Scene1BG
+@char NPC-A enter
+NPC-A: Привет, путник. Мне срочно нужна помощь...
+NPC-A: Если ты поможешь, я щедро тебя отблагодарю.
+@choice Help "Конечно, помогу!"
+@choice Refuse "Нет, мне некогда."
+# Help
