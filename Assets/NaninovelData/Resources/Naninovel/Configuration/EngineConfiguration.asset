@@ -31,5 +31,3 @@ MonoBehaviour:
   GenerateLabelMetadata: 1
   EnableDevelopmentConsole: 1
   DebugOnlyConsole: 0
-  ManagedScenes:
-  - NovelScene

@@ -1,9 +1,12 @@
 using Naninovel;
+using UnityEngine;
 
 [CommandAlias("AddScore")]
 public class AddScoreCommand : Command
 {
-    public int Points { get; set; }  // Параметр для количества очков
+    [ParameterAlias("")]
+    public IntegerParameter points;
+
 
     private ScoreManager scoreManager;
 
@@ -15,7 +18,14 @@ public class AddScoreCommand : Command
     // Реализация метода ExecuteAsync
     public override UniTask ExecuteAsync(AsyncToken asyncToken)
     {
-        scoreManager.AddScore(Points);  // Добавляем очки
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.AddScore(points);  // Добавляем очки
+        }
+        else
+        {
+            Debug.LogError("ScoreManager не найден!");
+        }
         return UniTask.CompletedTask;  // Завершаем выполнение
     }
 }

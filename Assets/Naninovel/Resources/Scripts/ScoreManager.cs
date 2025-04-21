@@ -1,8 +1,10 @@
 using Naninovel;
 using UnityEngine;
 
+[InitializeAtRuntime]
 public class ScoreManager : IEngineService
 {
+    public static ScoreManager Instance;
     private int score;
     private ScoreUI scoreUI;
 
@@ -10,6 +12,9 @@ public class ScoreManager : IEngineService
 
     public Naninovel.UniTask InitializeServiceAsync ()
     {
+        if (Instance == null) 
+            Instance = this;  // Инициализация Singleton
+
         // Попробуем найти компонент UI в сцене
         scoreUI = Object.FindObjectOfType<ScoreUI>();
         UpdateUI();
@@ -18,7 +23,7 @@ public class ScoreManager : IEngineService
 
     public void ResetService () => score = 0;
 
-    public void DestroyService () {}
+    public void DestroyService () { }
 
     public void AddScore (int value)
     {
@@ -33,4 +38,5 @@ public class ScoreManager : IEngineService
         if (scoreUI != null)
             scoreUI.SetScore(score);
     }
+
 }

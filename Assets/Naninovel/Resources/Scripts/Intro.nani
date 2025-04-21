@@ -1,9 +1,21 @@
 
-@stop
 @back Scene1BG
-@char NPC-A enter
+@show NPC-A
 NPC-A: Привет, путник. Мне срочно нужна помощь...
 NPC-A: Если ты поможешь, я щедро тебя отблагодарю.
-@choice Help "Конечно, помогу!"
-@choice Refuse "Нет, мне некогда."
+
+@choice "Конечно, помогу!" goto:.Help
+@choice "Нет, мне некогда." goto:.Refuse
+@stop
+
 # Help
+@addScore 10
+NPC-A: Спасибо! Я знал, что могу на тебя рассчитывать.
+@goto .Continue
+# Refuse
+@addScore 5
+NPC-A: Ну, выбора у тебя всё равно нет...
+NPC-A: В любом случае, ты уже втянут.
+@goto .Continue
+# Continue
+NPC-A: Вот, что тебе нужно сделать...
