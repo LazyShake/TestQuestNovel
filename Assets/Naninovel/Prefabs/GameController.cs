@@ -3,27 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+using Naninovel;
 
 public class GameController : MonoBehaviour
 {
-    public List<MemoryCard> cards; // карточки
+    public List<MemoryCard> cards;
     private MemoryCard firstRevealed;
     private MemoryCard secondRevealed;
 
     public float revealDelay = 1f;
 
-    // 🆕 UI элементы
     public GameObject gameOverPanel;
     public TextMeshProUGUI gameOverText;
     public Button continueButton;
 
-    // 🆕 Флаг блокировки ввода
     private bool isInputBlocked = false;
 
     private void Start()
     {
         InitializeCards();
-        // 🆕 Панель завершения скрыта изначально
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
     }
@@ -31,15 +30,13 @@ public class GameController : MonoBehaviour
     void InitializeCards()
     {
         List<int> values = new List<int>();
-
-        // Создаем пары чисел (8 пар по 2)
         for (int i = 0; i < 8; i++)
         {
             values.Add(i);
             values.Add(i);
         }
 
-        // Перемешиваем
+        // Shuffle values
         for (int i = 0; i < values.Count; i++)
         {
             int temp = values[i];
@@ -48,7 +45,6 @@ public class GameController : MonoBehaviour
             values[randomIndex] = temp;
         }
 
-        // Назначаем значения карточкам
         for (int i = 0; i < cards.Count; i++)
         {
             cards[i].Setup(values[i], this);
@@ -57,8 +53,7 @@ public class GameController : MonoBehaviour
 
     public void CardRevealed(MemoryCard card)
     {
-        // Блокируем ввод, если идет проверка пары
-        if (isInputBlocked) return;
+        if (isInputBlocked || card.IsMatched) return;
 
         if (firstRevealed == null)
         {
@@ -67,8 +62,8 @@ public class GameController : MonoBehaviour
         else if (secondRevealed == null)
         {
             secondRevealed = card;
-            isInputBlocked = true; // Блокируем ввод до завершения проверки
-            SetCardsInteractable(false); // Отключаем все карты
+            isInputBlocked = true;
+            SetCardsInteractable(false);
             StartCoroutine(CheckMatch());
         }
     }
@@ -91,19 +86,12 @@ public class GameController : MonoBehaviour
         firstRevealed = null;
         secondRevealed = null;
 
-        // Разблокируем ввод
         SetCardsInteractable(true);
         isInputBlocked = false;
 
-        // Проверка окончания игры
         if (IsGameComplete())
         {
-            Debug.Log("Игра завершена!");
             ShowGameOver();
-        }
-        else
-        {
-            Debug.Log("Пары не совпали, продолжаем игру.");
         }
     }
 
@@ -111,7 +99,8 @@ public class GameController : MonoBehaviour
     {
         foreach (var card in cards)
         {
-            card.button.interactable = isInteractable;
+            if (!card.IsMatched)
+                card.button.interactable = isInteractable;
         }
     }
 
@@ -119,38 +108,34 @@ public class GameController : MonoBehaviour
     {
         foreach (var card in cards)
         {
-            if (card.button.interactable)
+            if (!card.IsMatched)
                 return false;
         }
         return true;
     }
 
-    // 🆕 Показать завершение игры
+    public void ReturnToNovel()
+{
+    // Загружаем сцену с Naninovel (например, FinalScene)
+    SceneManager.LoadScene("FinalScene");
+}
+
     void ShowGameOver()
     {
         if (gameOverPanel != null)
         {
-            gameOverText.text = "Поздравляем, вы нашли все пары!";
+            gameOverText.text = "Задание выполнено!";
             gameOverPanel.SetActive(true);
-
-            // Убираем старые слушатели перед добавлением нового
             continueButton.onClick.RemoveListener(OnContinueButtonClick);
-
-            // Добавляем новый слушатель
             continueButton.onClick.AddListener(OnContinueButtonClick);
+            
         }
     }
 
-    // 🆕 Логика по кнопке "Продолжить"
     void OnContinueButtonClick()
     {
-        // Здесь можно вставить кастомную Naninovel-команду или переход к сценарию
         Debug.Log("Продолжить игру или выйти в новеллу");
-
-        // Скрыть панель завершения игры
         gameOverPanel.SetActive(false);
-
-        // Можно добавить здесь переход к следующему уровню или сценарию
-        // SceneManager.LoadScene("NextScene");
+        ReturnToNovel(); // Заменить на этот вызов
     }
 }

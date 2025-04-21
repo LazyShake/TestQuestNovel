@@ -1,49 +1,40 @@
 using Naninovel;
 using UnityEngine;
 
-[CommandAlias("CheckScore")]
+[CommandAlias("checkScore")]
 public class CheckScoreCommand : Command
 {
-    private ScoreManager scoreManager;
-
-    // Переменная для хранения предыдущего активного принтера
-    private string previousPrinterId;
-
-    public CheckScoreCommand()
-    {
-        scoreManager = Engine.GetService<ScoreManager>();  // Получаем сервис ScoreManager
-    }
+    // Пороговое значение очков, передаваемое в команде, например: @checkScore 5
+    [ParameterAlias("")]
+    public IntegerParameter Threshold;
 
     public override async UniTask ExecuteAsync(AsyncToken asyncToken = default)
     {
-        int currentScore = scoreManager.GetScore();  // Получаем текущие очки
+        var scoreManager = Engine.GetService<ScoreManager>();
+        int currentScore = scoreManager.GetScore();
 
-        // Получаем менеджер текстовых принтеров
-        var printerManager = Engine.GetService<ITextPrinterManager>();
-
-        // Сохраняем ID текущего активного принтера
-        previousPrinterId = printerManager.DefaultPrinterId;
-
-        // Устанавливаем новый активный принтер (например, с ID "bubble")
-        printerManager.DefaultPrinterId = "bubble";
-
-        // Создаем LocalizableText с правильным набором LocalizableTextPart
-        var text = new LocalizableText(new LocalizableTextPart[]
+        if (!Threshold.HasValue)
         {
-            LocalizableTextPart.FromPlainText("Current Score: "), // Текст до значения
-            LocalizableTextPart.FromPlainText(currentScore.ToString()) // Текст с текущими очками
-        });
-
-        // Выводим текст через новый активный принтер
-        await printerManager.PrintTextAsync(printerManager.DefaultPrinterId, text);
-
-        // Проверка, если принтер с таким ID не найден
-        if (printerManager.DefaultPrinterId == null)
-        {
-            Debug.LogWarning("Принтер с ID 'bubble' не найден.");
+            Debug.LogWarning("Threshold not provided to checkScore command.");
+            return;
         }
 
-        // Восстановление предыдущего активного принтера
-        printerManager.DefaultPrinterId = previousPrinterId;
+        int thresholdValue = Threshold.Value;
+
+        var scriptPlayer = Engine.GetService<IScriptPlayer>();
+        var stateManager = Engine.GetService<IStateManager>();
+
+        if (currentScore >= thresholdValue)
+        {
+            // Ветка "если очков достаточно или больше"
+            Debug.Log($"Score {currentScore} >= {thresholdValue}, jumping to label: HighScorePath");
+            await scriptPlayer.PreloadAndPlayAsync("HighScorePath");
+        }
+        else
+        {
+            // Ветка "если очков меньше"
+            Debug.Log($"Score {currentScore} < {thresholdValue}, jumping to label: LowScorePath");
+            await scriptPlayer.PreloadAndPlayAsync("LowScorePath");
+        }
     }
 }

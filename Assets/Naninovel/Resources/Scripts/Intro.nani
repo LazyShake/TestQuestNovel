@@ -19,3 +19,5 @@ NPC-A: В любом случае, ты уже втянут.
 @goto .Continue
 # Continue
 NPC-A: Вот, что тебе нужно сделать...
+
+@startMiniGame

@@ -10,10 +10,14 @@ public class MemoryCard : Card
 
     private GameController controller;
 
+    public bool IsMatched { get; private set; } = false;
+
     // Метод для инициализации карточки
     public void Setup(int value, GameController gameController)
     {
         id = value;
+        IsMatched = false;
+        isFlipped = false;
 
         if (gameController == null)
         {
@@ -23,12 +27,13 @@ public class MemoryCard : Card
 
         controller = gameController;
         text.text = ""; // скрыт по умолчанию
+        button.interactable = true;
     }
 
     // Метод при клике на карточку
     public void OnClick()
     {
-        if (isFlipped || controller == null) return;  // Проверка на null для controller
+        if (isFlipped || controller == null || IsMatched) return;
 
         isFlipped = true;
         text.text = id.ToString(); // показываем значение
@@ -43,9 +48,10 @@ public class MemoryCard : Card
         text.text = "";
     }
 
-    // Метод для отключения кнопки
+    // Метод для отключения карточки при совпадении
     public void Disable()
     {
+        IsMatched = true;
         button.interactable = false;
     }
 

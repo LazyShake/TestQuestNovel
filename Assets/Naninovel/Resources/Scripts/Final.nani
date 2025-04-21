@@ -1,0 +1,15 @@
+@back Scene1BG
+@show NPC-B
+char-B: Ты сделал то, что тебя просили?
+
+@CheckScore 15
+
+#HighScorePath
+char-B: Молодец, сьешь огурец.
+@stop
+
+#LowScorePath
+char-B: Ладно, и на том спасибо.
+@stop
+
+@stop
