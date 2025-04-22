@@ -36,7 +36,7 @@ public class GameController : MonoBehaviour
             values.Add(i);
         }
 
-        // Shuffle values
+        
         for (int i = 0; i < values.Count; i++)
         {
             int temp = values[i];
@@ -116,7 +116,7 @@ public class GameController : MonoBehaviour
 
     public void ReturnToNovel()
 {
-    // Загружаем сцену с Naninovel (например, FinalScene)
+    
     SceneManager.UnloadSceneAsync("FindPairGame");
     MiniGameWaiter.MiniGameFinished = true;
 
@@ -138,6 +138,6 @@ public class GameController : MonoBehaviour
     {
         Debug.Log("Продолжить игру или выйти в новеллу");
         gameOverPanel.SetActive(false);
-        ReturnToNovel(); // Заменить на этот вызов
+        ReturnToNovel(); 
     }
 }

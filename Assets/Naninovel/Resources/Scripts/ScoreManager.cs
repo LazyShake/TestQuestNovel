@@ -13,9 +13,9 @@ public class ScoreManager : IEngineService
     public Naninovel.UniTask InitializeServiceAsync ()
     {
         if (Instance == null) 
-            Instance = this;  // Инициализация Singleton
+            Instance = this;  
 
-        // Попробуем найти компонент UI в сцене
+        
         scoreUI = Object.FindObjectOfType<ScoreUI>();
         UpdateUI();
         return Naninovel.UniTask.CompletedTask;

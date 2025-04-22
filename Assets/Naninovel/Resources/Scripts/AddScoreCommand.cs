@@ -12,20 +12,20 @@ public class AddScoreCommand : Command
 
     public AddScoreCommand()
     {
-        scoreManager = Engine.GetService<ScoreManager>();  // Получаем сервис ScoreManager
+        scoreManager = Engine.GetService<ScoreManager>();  
     }
 
-    // Реализация метода ExecuteAsync
+    
     public override UniTask ExecuteAsync(AsyncToken asyncToken)
     {
         if (ScoreManager.Instance != null)
         {
-            ScoreManager.Instance.AddScore(points);  // Добавляем очки
+            ScoreManager.Instance.AddScore(points);  
         }
         else
         {
             Debug.LogError("ScoreManager не найден!");
         }
-        return UniTask.CompletedTask;  // Завершаем выполнение
+        return UniTask.CompletedTask;  
     }
 }

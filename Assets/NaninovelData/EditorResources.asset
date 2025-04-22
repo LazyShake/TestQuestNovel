@@ -149,9 +149,6 @@ MonoBehaviour:
     - name: NewScript
       pathPrefix: Scripts
       guid: c6366f91ef8e1014f8c085af92e5bb25
-    - name: Final
-      pathPrefix: Scripts
-      guid: 1d75f6d1762bbc14da260753e2fe9c85
   - Id: TextPrinters/d1a8c9f0-a6c0-48b7-a34b-e2cead03c580
     Resources:
     - name: Score
@@ -162,3 +159,21 @@ MonoBehaviour:
     - name: Scene1BG
       pathPrefix: Backgrounds/MainBackground
       guid: 56daec4bb7b8b694490f0c58bfd04361
+  - Id: CharacterAvatars
+    Resources:
+    - name: NPC-A
+      pathPrefix: CharacterAvatars
+      guid: f7df1065b37afa74dbe02c09a7c4dc22
+    - name: NPC-B
+      pathPrefix: CharacterAvatars
+      guid: ffc684daa44f83648a3f5a18d9953144
+  - Id: Characters/1ade3afa-ab34-4fa8-944a-a2301d095324
+    Resources:
+    - name: NPC-A
+      pathPrefix: Characters/NPC-A
+      guid: f7df1065b37afa74dbe02c09a7c4dc22
+  - Id: Characters/801ed35a-cc00-4a9f-af8b-763e39a7cef6
+    Resources:
+    - name: NPC-B
+      pathPrefix: Characters/NPC-B
+      guid: ffc684daa44f83648a3f5a18d9953144

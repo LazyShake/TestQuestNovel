@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
-    public Image frontImage; // Лицевая сторона
-    public Image backImage;  // Обратная сторона
+    public Image frontImage; 
+    public Image backImage;  
     protected bool isFlipped = false;
 
-    // Переворачиваем карточку
+
     public void FlipCard()
     {
         isFlipped = !isFlipped;
