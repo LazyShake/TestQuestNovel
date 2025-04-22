@@ -117,7 +117,9 @@ public class GameController : MonoBehaviour
     public void ReturnToNovel()
 {
     // Загружаем сцену с Naninovel (например, FinalScene)
-    SceneManager.LoadScene("FinalScene");
+    SceneManager.UnloadSceneAsync("FindPairGame");
+    MiniGameWaiter.MiniGameFinished = true;
+
 }
 
     void ShowGameOver()

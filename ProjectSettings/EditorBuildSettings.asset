@@ -11,12 +11,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/NovelScene.unity
     guid: ee0cb87bd1c874e468ba25281ca9afa4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 224c4f4d08053f4408897065d5203151
   - enabled: 1
     path: Assets/Scenes/FindPairGame.unity
     guid: e93f50401f7276843a903f420785b6c3
+  - enabled: 1
+    path: Assets/Scenes/FinalScene.unity
+    guid: 8ee9246580c1c7344b3725a15d1b029a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0

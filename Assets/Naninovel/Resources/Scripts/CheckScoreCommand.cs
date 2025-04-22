@@ -4,7 +4,6 @@ using UnityEngine;
 [CommandAlias("checkScore")]
 public class CheckScoreCommand : Command
 {
-    // Пороговое значение очков, передаваемое в команде, например: @checkScore 5
     [ParameterAlias("")]
     public IntegerParameter Threshold;
 
@@ -20,21 +19,18 @@ public class CheckScoreCommand : Command
         }
 
         int thresholdValue = Threshold.Value;
-
         var scriptPlayer = Engine.GetService<IScriptPlayer>();
-        var stateManager = Engine.GetService<IStateManager>();
 
-        if (currentScore >= thresholdValue)
+        var currentScriptName = scriptPlayer.PlayedScript?.Name;
+        if (string.IsNullOrEmpty(currentScriptName))
         {
-            // Ветка "если очков достаточно или больше"
-            Debug.Log($"Score {currentScore} >= {thresholdValue}, jumping to label: HighScorePath");
-            await scriptPlayer.PreloadAndPlayAsync("HighScorePath");
+            Debug.LogError("Failed to get the name of the current script.");
+            return;
         }
-        else
-        {
-            // Ветка "если очков меньше"
-            Debug.Log($"Score {currentScore} < {thresholdValue}, jumping to label: LowScorePath");
-            await scriptPlayer.PreloadAndPlayAsync("LowScorePath");
-        }
+
+        string labelToJump = currentScore >= thresholdValue ? "HighScorePath" : "LowScorePath";
+        Debug.Log($"Score {currentScore} vs {thresholdValue} → jumping to label #{labelToJump} in script {currentScriptName}");
+
+        await scriptPlayer.PreloadAndPlayAsync(currentScriptName, label: labelToJump);
     }
 }

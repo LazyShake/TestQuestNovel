@@ -157,3 +157,8 @@ MonoBehaviour:
     - name: Score
       pathPrefix: TextPrinters
       guid: 94ae1c68960f8e34eb4cd3746e9bc577
+  - Id: Backgrounds/8f716003-2c23-458f-8e47-d6f777cb22aa
+    Resources:
+    - name: Scene1BG
+      pathPrefix: Backgrounds/MainBackground
+      guid: 56daec4bb7b8b694490f0c58bfd04361

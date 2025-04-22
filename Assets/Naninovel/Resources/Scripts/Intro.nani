@@ -1,6 +1,6 @@
 
 @back Scene1BG
-@show NPC-A
+@char NPC-A avatar:NPC-A id:NPC-A
 NPC-A: Привет, путник. Мне срочно нужна помощь...
 NPC-A: Если ты поможешь, я щедро тебя отблагодарю.
 
@@ -10,7 +10,7 @@ NPC-A: Если ты поможешь, я щедро тебя отблагода
 
 # Help
 @addScore 10
-NPC-A: Спасибо! Я знал, что могу на тебя рассчитывать.
+NPC-A: Спасибо! Я знала, что могу на тебя рассчитывать.
 @goto .Continue
 # Refuse
 @addScore 5
@@ -19,5 +19,21 @@ NPC-A: В любом случае, ты уже втянут.
 @goto .Continue
 # Continue
 NPC-A: Вот, что тебе нужно сделать...
-
+@hideAll
 @startMiniGame
+@waitMiniGame
+@showUI 
+@hide NPC-A
+@back Scene1BG
+@char NPC-B avatar:NPC-B id:NPC-B
+char-B: Ты сделал то, что тебя просили?
+
+@CheckScore 10
+
+# HighScorePath
+char-B: Молодец, сьешь огурец.
+@stop
+
+# LowScorePath
+char-B: Ладно, и на том спасибо.
+@stop
